@@ -24,7 +24,7 @@ function play(playCommand, path) {
     if (error) {
       winston.error(stderr, error);
     } else if (playlist.length > 0) {
-      play(playlist.shift());
+      play(playCommand, playlist.shift());
     } else {
       isPlaying = false;
       winston.info('Finished playing');
