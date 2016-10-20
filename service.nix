@@ -9,7 +9,13 @@ mkService rec {
   dependsOn = [ mosquitto ];
   deviceAccess = true;
 
-  environment.PLAY_COMMAND = "${sox}/bin/play";
   
-  script = "exec ${nodejs}/bin/node --use_strict ${mqtt-play.build}/lib/node_modules/mqtt-play/src/index.js";
+  script = ''
+  if [ "$INTEGRATION_TESTING" = "1" ]; then
+    export PLAY_COMMAND="echo"
+  else
+    export PLAY_COMMAND="${sox}/bin/play"
+  fi
+  exec ${nodejs}/bin/node --use_strict ${mqtt-play.build}/lib/node_modules/mqtt-play/src/index.js
+  '';
 }
