@@ -1,7 +1,7 @@
 const mqtt      = require('mqtt');
 const winston   = require('winston');
 const playerCon = require('./module/player.js');
-const consts    = require(`${__dirname}/support/constants`);
+const consts    = require('./support/constants');
 
 const client = mqtt.connect(consts.mqttHost);
 

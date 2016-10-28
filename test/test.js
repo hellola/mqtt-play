@@ -1,9 +1,9 @@
 const mqtt    = require('mqtt');
 const winston = require('winston');
 const spawn   = require('child_process').spawn;
-const client  = mqtt.connect('mqtt://localhost');
-const consts  = require(`${__dirname}/../src/support/constants`);
+const consts  = require('../src/support/constants');
 
+const client     = mqtt.connect('mqtt://localhost');
 const mqttConfig = { qos: 1 };
 
 launchService()
@@ -15,10 +15,9 @@ function launchService() {
       if (process.env.INTEGRATION_TESTING) {
         winston.info('Connecting to service journal...');
         return spawn('journalctl', ['-fu', 'mqtt-play']);
-      } else {
-        winston.info('Launching player service...');
-        return spawn('npm', ['start']);
       }
+      winston.info('Launching player service...');
+      return spawn('npm', ['start']);
     })();
 
     service.stdout.on('data', (data) => {
